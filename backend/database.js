@@ -50,7 +50,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
         brand TEXT DEFAULT 'LUXE GEMS',
         img TEXT NOT NULL,
         images TEXT NOT NULL, -- Stored as JSON string
-        size TEXT, -- Stored as JSON string
+        sizes TEXT, -- Stored as JSON string
         description TEXT,
         subCategory TEXT,
         FOREIGN KEY (category) REFERENCES categories(name) ON UPDATE CASCADE

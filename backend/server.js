@@ -41,6 +41,18 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
     res.json({ url: `/uploads/${req.file.filename}` });
 });
 
+// Delete image
+app.delete('/api/upload/:filename', (req, res) => {
+    const filename = req.params.filename;
+    const filePath = path.join(uploadPath, filename);
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to delete file' });
+        }
+        res.json({ success: true });
+    });
+});
+
 // --- Categories API ---
 
 // Get all categories
@@ -166,10 +178,10 @@ app.post('/api/products', (req, res) => {
     ];
 
     const stmt = `
-    INSERT INTO products (
-      id, name, price, oldPrice, discount, category, soldOut, brand, img, images, size, description, subCategory
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
+        INSERT INTO products (
+            id, name, price, oldPrice, discount, category, soldOut, brand, img, images, sizes, description, subCategory
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
     db.run(stmt, values, function (err) {
         if (err) {
@@ -202,11 +214,11 @@ app.put('/api/products/:id', (req, res) => {
     ];
 
     const stmt = `
-    UPDATE products SET
-      name = ?, price = ?, oldPrice = ?, discount = ?, category = ?, soldOut = ?, 
-      brand = ?, img = ?, images = ?, size = ?, description = ?, subCategory = ?
-    WHERE id = ?
-  `;
+        UPDATE products SET
+            name = ?, price = ?, oldPrice = ?, discount = ?, category = ?, soldOut = ?, 
+            brand = ?, img = ?, images = ?, sizes = ?, description = ?, subCategory = ?
+        WHERE id = ?
+    `;
 
     db.run(stmt, values, function (err) {
         if (err) return res.status(500).json({ error: err.message });

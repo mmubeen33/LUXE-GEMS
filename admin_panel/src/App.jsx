@@ -67,7 +67,11 @@ const ProductModal = ({ isOpen, onClose, product, onSave, categories = [] }) => 
   const [errorMsg, setErrorMsg] = useState('');
 
   const [images, setImages] = useState(product?.images || ['', '', '']);
-  const [thumbnailIdx, setThumbnailIdx] = useState(product?.images ? product.images.indexOf(product.img) : 0);
+  const [thumbnailIdx, setThumbnailIdx] = useState(() => {
+    if (!product?.images || product.images.length === 0) return 0;
+    const idx = product.images.indexOf(product.img);
+    return idx >= 0 ? idx : 0;
+  });
 
   const handleSave = () => {
     if (!name || !price || images[thumbnailIdx] === '' || !category.trim()) {
@@ -76,7 +80,7 @@ const ProductModal = ({ isOpen, onClose, product, onSave, categories = [] }) => 
       return;
     }
     const finalProduct = {
-      id: product?.id || `custom-${Date.now()}`,
+      id: product?.id || `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       name, price: Number(price), oldPrice: oldPrice ? Number(oldPrice) : null, discount: discount || null, category: category.trim(), soldOut, brand: 'LUXE GEMS',
       subCategory: subCategory.trim() || null,
       images: images.filter(url => url !== ''),
@@ -107,9 +111,10 @@ const ProductModal = ({ isOpen, onClose, product, onSave, categories = [] }) => 
               <button onClick={onClose} className="text-gray-400 hover:text-black transition-colors rounded-full hover:bg-gray-100 p-3"><X size={24} /></button>
             </div>
 
+            <AdminNotification message={errorMsg} onClose={() => setErrorMsg('')} />
+
             {/* Scrollable Content */}
             <div className="overflow-y-auto p-6 md:px-10 md:py-8 flex-1 no-scrollbar bg-gray-50/30">
-              <AdminNotification message={errorMsg} onClose={() => setErrorMsg('')} />
 
               {/* Image Upload Section */}
               <div className="mb-10 bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm">
@@ -131,7 +136,13 @@ const ProductModal = ({ isOpen, onClose, product, onSave, categories = [] }) => 
                           <>
                             <img src={images[idx]} alt={`Prod Angle ${idx + 1}`} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                              <button onClick={() => setImages(prev => { const next = [...prev]; next[idx] = ''; return next; })} className="bg-red-500 text-white p-2 text-xs rounded-full shadow-lg hover:bg-red-600 flex items-center gap-2 px-4 transition-transform hover:scale-105"><Trash2 size={14} /> Remove</button>
+                              <button onClick={() => {
+                                if (images[idx]) {
+                                  const filename = images[idx].split('/').pop();
+                                  fetch(`/api/upload/${filename}`, { method: 'DELETE' }).catch(err => console.error('Failed to delete image:', err));
+                                }
+                                setImages(prev => { const next = [...prev]; next[idx] = ''; return next; });
+                              }} className="bg-red-500 text-white p-2 text-xs rounded-full shadow-lg hover:bg-red-600 flex items-center gap-2 px-4 transition-transform hover:scale-105"><Trash2 size={14} /> Remove</button>
                             </div>
                           </>
                         ) : (
@@ -140,7 +151,7 @@ const ProductModal = ({ isOpen, onClose, product, onSave, categories = [] }) => 
                             <span className="text-[10px] text-gray-400 uppercase tracking-widest font-medium">Click to Add</span>
                           </div>
                         )}
-                        <input type="file" accept="image/*" onChange={async (e) => {
+                        {!images[idx] && <input type="file" accept="image/*" onChange={async (e) => {
                           const file = e.target.files[0];
                           if (file) {
                             try {
@@ -166,7 +177,7 @@ const ProductModal = ({ isOpen, onClose, product, onSave, categories = [] }) => 
                               setTimeout(() => setErrorMsg(''), 4000);
                             }
                           }
-                        }} className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" disabled={images[idx]} />
+                        }} className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" />}
                       </div>
                       <button onClick={() => setThumbnailIdx(idx)} className={`w-full text-[10px] py-2.5 rounded-lg tracking-widest uppercase font-bold transition-all ${thumbnailIdx === idx ? 'bg-teal-500 text-white shadow-lg shadow-teal-500/30' : 'bg-white border border-gray-200 text-gray-500 hover:border-teal-500 hover:text-teal-600'}`}>Set as Thumbnail</button>
                     </div>
@@ -691,13 +702,27 @@ const AdminDashboard = ({ products, setProducts, categories, setCategories, logO
       const url = editingProduct ? `/api/products/${prod.id}` : '/api/products';
       const method = editingProduct ? 'PUT' : 'POST';
 
+      const fixedProd = { ...prod };
+      if (fixedProd.size && !fixedProd.sizes) {
+        fixedProd.sizes = fixedProd.size;
+        delete fixedProd.size;
+      }
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(prod)
+        body: JSON.stringify(fixedProd)
       });
 
-      if (!res.ok) throw new Error('Failed to save product');
+      if (!res.ok) {
+        let errorMsg = 'Failed to save product';
+        try {
+          const data = await res.json();
+          errorMsg = data.error || errorMsg;
+        } catch (e) {
+          // ignore
+        }
+        throw new Error(errorMsg);
+      }
 
       if (editingProduct) {
         setProducts(products.map(p => p.id === prod.id ? prod : p));
@@ -1088,7 +1113,7 @@ const AdminDashboard = ({ products, setProducts, categories, setCategories, logO
                   {getFaqs().map((section, secIdx) => (
                     <div key={secIdx} className="bg-gray-50 border border-gray-200 rounded-xl p-4 relative">
                       <button onClick={() => removeFaqSection(secIdx)} className="absolute top-2 right-2 text-gray-400 hover:text-red-500"><X size={16} /></button>
-                      
+
                       <input type="text" value={section.section} onChange={(e) => updateFaqSection(secIdx, e.target.value)} className="w-full border border-gray-200 bg-white rounded-lg p-3 mb-4 text-sm font-bold focus:border-black outline-none" placeholder="Section Title (e.g., 'Shipping & Delivery')" />
 
                       <div className="space-y-3 mb-4">

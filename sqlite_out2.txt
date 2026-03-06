@@ -1,0 +1,13 @@
+0|id|TEXT|0||1
+1|name|TEXT|1||0
+2|price|INTEGER|1||0
+3|oldPrice|INTEGER|0||0
+4|discount|TEXT|0||0
+5|category|TEXT|1||0
+6|soldOut|BOOLEAN|0|0|0
+7|brand|TEXT|0|'LUXE GEMS'|0
+8|img|TEXT|1||0
+9|images|TEXT|1||0
+10|sizes|TEXT|0||0
+11|description|TEXT|0||0
+12|subCategory|TEXT|0||0

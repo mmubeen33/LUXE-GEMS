@@ -936,13 +936,13 @@ const DualBanners = ({ categories, navigateTo, products = [] }) => {
 
   const getImage = (catName) => {
     const p = products.find(pr => pr.category === catName && pr.img);
-    return p ? p.img : '/placeholder.png';
+    return p ? p.img : null;
   };
 
   return (
     <section className="bg-white w-full px-4 md:px-12 py-10 flex flex-col md:flex-row gap-6">
       <div onClick={() => navigateTo('category', firstCat)} className="w-full md:w-1/2 relative h-[200px] md:h-[300px] bg-[#f0ece6] overflow-hidden group cursor-pointer flex items-center justify-center">
-        <img src={getImage(firstCat)} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt={firstCat} />
+        {getImage(firstCat) && <img src={getImage(firstCat)} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt={firstCat} />}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
         <div className="absolute left-6 md:left-10 text-white space-y-1 md:space-y-2 z-10">
           <h3 className="text-lg md:text-xl font-serif italic mb-1">{firstCat}</h3>
@@ -950,7 +950,7 @@ const DualBanners = ({ categories, navigateTo, products = [] }) => {
         </div>
       </div>
       <div onClick={() => navigateTo('category', secondCat)} className="w-full md:w-1/2 relative h-[200px] md:h-[300px] bg-[#e8e4db] overflow-hidden group cursor-pointer flex items-center justify-center">
-        <img src={getImage(secondCat)} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt={secondCat} />
+        {getImage(secondCat) && <img src={getImage(secondCat)} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt={secondCat} />}
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
         <div className="absolute left-6 md:left-10 text-white space-y-1 md:space-y-2 z-10">
           <h3 className="text-lg md:text-xl font-serif italic mb-1">{secondCat}</h3>
@@ -972,7 +972,7 @@ const BlogsSection = () => (
     </div>
     <div className="flex flex-col md:flex-row gap-8">
       <article className="w-full md:w-1/2 flex flex-col md:flex-row gap-6 group cursor-pointer">
-        <div className="w-full md:w-1/2 overflow-hidden aspect-[4/3]"><img src="/placeholder.png" alt="Blog 1" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
+        <div className="w-full md:w-1/2 overflow-hidden aspect-[4/3] bg-gray-200 flex items-center justify-center text-gray-400 font-bold tracking-widest text-xs uppercase group-hover:bg-gray-300 transition-colors">Blog Image</div>
         <div className="w-full md:w-1/2 flex flex-col justify-center">
           <p className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest mb-2">On January 27, 2026</p>
           <h3 className="text-xs md:text-sm font-serif font-bold text-[#2d2926] mb-2 md:mb-3 uppercase group-hover:text-gray-500 transition-colors">Ultimate Guide To Women's Wedding Bands</h3>
@@ -980,7 +980,7 @@ const BlogsSection = () => (
         </div>
       </article>
       <article className="w-full md:w-1/2 flex flex-col md:flex-row gap-6 group cursor-pointer mt-8 md:mt-0">
-        <div className="w-full md:w-1/2 overflow-hidden aspect-[4/3]"><img src="/placeholder.png" alt="Blog 2" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /></div>
+        <div className="w-full md:w-1/2 overflow-hidden aspect-[4/3] bg-gray-200 flex items-center justify-center text-gray-400 font-bold tracking-widest text-xs uppercase group-hover:bg-gray-300 transition-colors">Blog Image</div>
         <div className="w-full md:w-1/2 flex flex-col justify-center">
           <p className="text-[9px] md:text-[10px] text-gray-400 uppercase tracking-widest mb-2">On February 8, 2026</p>
           <h3 className="text-xs md:text-sm font-serif font-bold text-[#2d2926] mb-2 md:mb-3 uppercase group-hover:text-gray-500 transition-colors">4 Gifts For Your Loved One</h3>
@@ -1002,14 +1002,10 @@ const InstagramSection = () => (
     </div>
     <div className="flex w-full overflow-x-auto no-scrollbar snap-x">
       {[
-        "/placeholder.png",
-        "/placeholder.png",
-        "/placeholder.png",
-        "/placeholder.png",
-        "/placeholder.png"
-      ].map((img, i) => (
-        <div key={i} className="min-w-[50%] md:min-w-[20%] w-[50%] md:w-1/5 relative group cursor-pointer aspect-square snap-start shrink-0">
-          <img src={img} className="w-full h-full object-cover group-hover:opacity-80 transition-opacity" alt="Instagram" />
+        1, 2, 3, 4, 5
+      ].map((item, i) => (
+        <div key={i} className="min-w-[50%] md:min-w-[20%] w-[50%] md:w-1/5 relative group cursor-pointer aspect-square snap-start shrink-0 bg-gray-200 border-r border-white">
+          <div className="w-full h-full flex items-center justify-center text-gray-400 font-bold text-xs tracking-widest uppercase">Insta Post</div>
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
             <Heart size={24} className="text-white md:w-8 md:h-8" fill="white" />
           </div>
