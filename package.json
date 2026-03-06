@@ -1,0 +1,16 @@
+{
+  "name": "celestique-store",
+  "version": "1.0.0",
+  "description": "Luxe Gems Store",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "backend": "cd backend && npm install && node server.js",
+    "frontend": "cd frontend && npm install --legacy-peer-deps && npm start",
+    "install-all": "cd backend && npm install && cd ../frontend && npm install --legacy-peer-deps && cd ../admin_panel && npm install",
+    "build": "npm run install-all && cd frontend && npm run build && cd ../admin_panel && npm run build"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
