@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Serve static React files implicitly by CRA proxy but we must static serve uploads
 const uploadPath = path.join(__dirname, 'uploads');
@@ -171,7 +172,10 @@ app.post('/api/products', (req, res) => {
   `;
 
     db.run(stmt, values, function (err) {
-        if (err) return res.status(500).json({ error: err.message });
+        if (err) {
+            console.error('Product save error:', err.message);
+            return res.status(500).json({ error: err.message });
+        }
         res.status(201).json({ success: true, id: product.id });
     });
 });
