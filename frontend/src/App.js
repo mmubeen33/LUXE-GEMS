@@ -579,7 +579,7 @@ const Hero = ({ navigateTo, categories = [] }) => {
             initial={{ opacity: 0, y: 200, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1.1 }}
             transition={{ duration: 2, ease: luxuryEase, delay: 0.2 }}
-            className="w-[100%] sm:w-[120%] md:w-full max-w-[850px] h-[60vh] md:h-[95vh] flex justify-center items-end"
+            className="w-[100%] sm:w-[120%] md:w-full max-w-[850px] h-[58vh] md:h-[95vh] flex justify-center items-end"
           >
             <img src="https://i.postimg.cc/GhWK9XnY/hero-hands.png" alt="Luxury gold and diamond rings" className="w-[110%] md:w-full h-full object-contain md:object-bottom object-top drop-shadow-[0_35px_35px_rgba(0,0,0,0.35)]" loading="eager" />
           </motion.div>
@@ -591,9 +591,9 @@ const Hero = ({ navigateTo, categories = [] }) => {
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 0.9, y: 0 }}
             transition={{ duration: 1.5, ease: luxuryEase }}
-            className="flex flex-col items-center justify-center text-center w-full px-4 pt-10 md:pt-0"
+            className="flex flex-col items-center justify-center text-center w-full px-2 pt-0 md:pt-0"
           >
-            <h1 className="text-[3.5rem] leading-[1.1] md:text-8xl lg:text-[11rem] font-serif tracking-[0.15em] md:tracking-[0.3em] uppercase opacity-90" style={{
+            <h1 className="text-[16vw] md:text-[10vw] lg:text-[12rem] leading-none md:leading-tight font-serif tracking-[0.1em] md:tracking-[0.2em] uppercase opacity-90 w-full whitespace-nowrap md:whitespace-nowrap flex flex-col md:flex-row justify-center items-center gap-1 md:gap-8" style={{
               textShadow: '0px 15px 40px rgba(0,0,0,0.1)',
               fontWeight: 300
             }}>
