@@ -574,26 +574,26 @@ const Hero = ({ navigateTo, categories = [] }) => {
 
       <div className="absolute inset-0 flex justify-center items-center w-full h-full pointer-events-none">
 
-        <div className="absolute bottom-[-10%] md:bottom-[-15%] left-0 w-full flex justify-center items-end z-20 pointer-events-none">
+        <div className="absolute bottom-0 md:bottom-[-15%] left-0 w-full flex justify-center items-end z-20 pointer-events-none">
           <motion.div
             initial={{ opacity: 0, y: 200, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1.1 }}
             transition={{ duration: 2, ease: luxuryEase, delay: 0.2 }}
-            className="w-[130%] sm:w-[120%] md:w-full max-w-[850px] h-[70vh] md:h-[95vh]"
+            className="w-[100%] sm:w-[120%] md:w-full max-w-[850px] h-[60vh] md:h-[95vh] flex justify-center items-end"
           >
-            <img src="https://i.postimg.cc/GhWK9XnY/hero-hands.png" alt="Luxury gold and diamond rings" className="w-full h-full object-contain object-bottom drop-shadow-[0_35px_35px_rgba(0,0,0,0.35)]" loading="eager" />
+            <img src="https://i.postimg.cc/GhWK9XnY/hero-hands.png" alt="Luxury gold and diamond rings" className="w-[110%] md:w-full h-full object-contain md:object-bottom object-top drop-shadow-[0_35px_35px_rgba(0,0,0,0.35)]" loading="eager" />
           </motion.div>
         </div>
 
         {/* TEXT SHIFTED HIGHER */}
-        <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none pb-40 md:pb-60">
+        <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none pb-56 md:pb-60">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 0.9, y: 0 }}
             transition={{ duration: 1.5, ease: luxuryEase }}
-            className="flex flex-col items-center justify-center text-center w-full px-4"
+            className="flex flex-col items-center justify-center text-center w-full px-4 pt-10 md:pt-0"
           >
-            <h1 className="text-5xl md:text-8xl lg:text-[11rem] font-serif tracking-[0.2em] md:tracking-[0.3em] uppercase opacity-90" style={{
+            <h1 className="text-[3.5rem] leading-[1.1] md:text-8xl lg:text-[11rem] font-serif tracking-[0.15em] md:tracking-[0.3em] uppercase opacity-90" style={{
               textShadow: '0px 15px 40px rgba(0,0,0,0.1)',
               fontWeight: 300
             }}>
@@ -638,8 +638,8 @@ const Hero = ({ navigateTo, categories = [] }) => {
         </motion.div>
       </motion.div>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 md:hidden z-30">
-        <button onClick={() => navigateTo('category', 'Collection 2026')} className="bg-[#111111] text-white px-10 py-4 rounded-full text-xs font-bold tracking-[0.2em] uppercase shadow-2xl border border-transparent hover:border-[#d4af37]" aria-label="Shop the new collection">Shop Now</button>
+      <div className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 md:hidden z-30 w-full px-8">
+        <button onClick={() => navigateTo('category', 'Collection 2026')} className="w-full bg-[#111111] text-white px-10 py-[18px] rounded-full text-[13px] font-bold tracking-[0.2em] uppercase shadow-2xl shadow-black/40 border border-[#2d2926] hover:bg-black transition-colors" aria-label="Shop the new collection">Shop Now</button>
       </div>
     </section>
   );
