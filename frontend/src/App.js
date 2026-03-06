@@ -183,7 +183,7 @@ const MegaNavbar = ({ categories, cartCount, wishlistCount, setIsCartOpen, setIs
 
             {/* CENTER: LARGE LOGO */}
             <div onClick={() => window.location.href = '/'} className="flex items-center justify-center flex-1 shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
-              <img src="/images/Logo.png" alt="LUXE GEMS Logo" className="h-20 md:h-28 lg:h-32 object-contain" />
+              <img src="https://i.postimg.cc/7PCQ6GJz/Logo.png" alt="LUXE GEMS Logo" className="h-20 md:h-28 lg:h-32 object-contain" />
             </div>
 
             {/* RIGHT: ICONS */}
@@ -565,11 +565,11 @@ const Hero = ({ navigateTo, categories = [] }) => {
   return (
     <section id="hero" className="relative w-full h-[80vh] md:h-[100vh] bg-[white] overflow-hidden flex flex-col z-0 justify-center items-center">
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-        <img src="/images/bg.jpg" alt="Background" className="w-full h-full object-cover opacity-90" />
+        <img src="https://i.postimg.cc/bJnkXhd1/bg.jpg" alt="Background" className="w-full h-full object-cover opacity-90" />
       </div>
 
       <div className="absolute top-4 left-4 md:top-12 md:left-12 z-30 cursor-pointer pointer-events-auto hidden md:block" onClick={() => window.location.href = '/'}>
-        <img src="/images/Logo.png" alt="LUXE GEMS Small Logo" className="h-16 md:h-24 object-contain hover:opacity-80 transition-opacity drop-shadow-sm" />
+        <img src="https://i.postimg.cc/7PCQ6GJz/Logo.png" alt="LUXE GEMS Small Logo" className="h-16 md:h-24 object-contain hover:opacity-80 transition-opacity drop-shadow-sm" />
       </div>
 
       <div className="absolute inset-0 flex justify-center items-center w-full h-full pointer-events-none">
@@ -581,7 +581,7 @@ const Hero = ({ navigateTo, categories = [] }) => {
             transition={{ duration: 2, ease: luxuryEase, delay: 0.2 }}
             className="w-[130%] sm:w-[120%] md:w-full max-w-[850px] h-[70vh] md:h-[95vh]"
           >
-            <img src="/images/hero-hands.png" alt="Luxury gold and diamond rings" className="w-full h-full object-contain object-bottom drop-shadow-[0_35px_35px_rgba(0,0,0,0.35)]" loading="eager" />
+            <img src="https://i.postimg.cc/GhWK9XnY/hero-hands.png" alt="Luxury gold and diamond rings" className="w-full h-full object-contain object-bottom drop-shadow-[0_35px_35px_rgba(0,0,0,0.35)]" loading="eager" />
           </motion.div>
         </div>
 

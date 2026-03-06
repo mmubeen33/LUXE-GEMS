@@ -437,14 +437,14 @@ app.post('/api/restore', (req, res) => {
 // Serve Admin Panel
 const adminPath = path.join(__dirname, '../admin_panel/dist');
 app.use('/admin', express.static(adminPath));
-app.get('/admin/*', (req, res) => {
+app.get('/admin/{*path}', (req, res) => {
     res.sendFile(path.join(adminPath, 'index.html'));
 });
 
 // Serve Frontend Store
 const storePath = path.join(__dirname, '../frontend/build');
 app.use(express.static(storePath));
-app.get('*', (req, res) => {
+app.get('{*path}', (req, res) => {
     res.sendFile(path.join(storePath, 'index.html'));
 });
 

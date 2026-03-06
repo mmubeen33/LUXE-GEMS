@@ -18,12 +18,12 @@ const SizeChart = ({ content }) => {
                 <div className="prose prose-sm max-w-none text-gray-700 font-sans text-sm md:text-base leading-relaxed mb-16
                     [&_h4]:text-lg [&_h4]:font-bold [&_h4]:text-[#2d2926] [&_h4]:mt-6 [&_h4]:mb-3
                     [&_p]:mb-4 [&_p]:leading-relaxed
-                    " 
-                    dangerouslySetInnerHTML={{ __html: content }} 
+                    "
+                    dangerouslySetInnerHTML={{ __html: content }}
                 />
 
                 <div className="bg-gray-50 p-4 md:p-8 rounded-2xl md:rounded-3xl border border-gray-100 shadow-sm flex justify-center overflow-hidden">
-                    <img src="/images/size-guide.png" alt="LUXE GEMS Size Guide" className="max-w-full h-auto object-contain shadow-md rounded-xl" style={{ maxHeight: '80vh' }} />
+                    <img src="https://i.postimg.cc/Gtc2MwDR/size-guide.png" alt="LUXE GEMS Size Guide" className="max-w-full h-auto object-contain shadow-md rounded-xl" style={{ maxHeight: '80vh' }} />
                 </div>
 
                 <div className="mt-16 text-center max-w-2xl mx-auto">
