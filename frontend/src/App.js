@@ -586,14 +586,14 @@ const Hero = ({ navigateTo, categories = [] }) => {
         </div>
 
         {/* TEXT SHIFTED HIGHER */}
-        <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none pb-56 md:pb-60">
+        <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none pb-48 md:pb-60">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 0.9, y: 0 }}
             transition={{ duration: 1.5, ease: luxuryEase }}
-            className="flex flex-col items-center justify-center text-center w-full px-2 pt-0 md:pt-0"
+            className="flex flex-col items-center justify-center text-center w-full px-4 md:pt-0"
           >
-            <h1 className="text-[16vw] md:text-[10vw] lg:text-[12rem] leading-none md:leading-tight font-serif tracking-[0.1em] md:tracking-[0.2em] uppercase opacity-90 w-full whitespace-nowrap md:whitespace-nowrap flex flex-col md:flex-row justify-center items-center gap-1 md:gap-8" style={{
+            <h1 className="text-[14vw] md:text-7xl lg:text-[9.5rem] leading-none font-serif tracking-[0.1em] md:tracking-[0.25em] uppercase opacity-90 w-full flex justify-between md:justify-center items-center md:gap-8" style={{
               textShadow: '0px 15px 40px rgba(0,0,0,0.1)',
               fontWeight: 300
             }}>
@@ -603,23 +603,27 @@ const Hero = ({ navigateTo, categories = [] }) => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 flex justify-between items-end w-full px-4 md:px-12 pb-8 md:pb-16 z-30 hidden md:flex">
-        <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-1/3 text-[#111111] flex flex-col justify-end h-full transform translate-y-12">
-          <motion.h2 variants={fadeInUp} className="text-4xl lg:text-6xl font-serif mb-4 lg:mb-6 tracking-[0.1em] drop-shadow-md leading-tight group">
-            COLLECTION<br /><span className="font-light italic text-[#d4af37]">2026</span>
+      <div className="absolute bottom-0 left-0 flex justify-between items-end w-full px-6 md:px-12 pb-24 md:pb-16 z-30 pointer-events-none">
+        {/* LEFT COLUMN */}
+        <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-1/2 md:w-1/3 text-[#111111] flex flex-col justify-end h-full transform translate-y-0 md:translate-y-12 pointer-events-auto">
+          <motion.h2 variants={fadeInUp} className="text-[1.3rem] md:text-3xl lg:text-6xl font-serif mb-2 lg:mb-6 tracking-[0.1em] drop-shadow-md leading-tight group">
+            COLLECTION<br className="block" /><span className="font-light italic text-[#d4af37]">2026</span>
           </motion.h2>
-          <motion.div variants={fadeInUp} className="h-[2px] w-24 bg-gradient-to-r from-[#d4af37] to-[#fcf2bd] mb-8 shadow-sm"></motion.div>
-          <motion.p variants={fadeInUp} className="text-xs lg:text-sm font-sans font-medium leading-relaxed mb-10 max-w-xs tracking-[0.1em] drop-shadow-sm text-[#333333]">Discover exquisite jewelry inspired by the beauty of the heavens. Each piece is crafted to bring elegance to your most cherished occasions.</motion.p>
-          <motion.button onClick={() => navigateTo('category', 'Collection 2026')} variants={fadeInUp} whileHover={{ scale: 1.05, backgroundColor: "#d4af37", color: "#111" }} whileTap={{ scale: 0.95 }} className="group bg-[#111111] text-white font-bold px-10 py-4 rounded-full text-xs tracking-[0.2em] uppercase flex items-center gap-4 transition-all duration-300 w-fit shadow-2xl border border-transparent hover:border-[#d4af37]">
+          <motion.div variants={fadeInUp} className="hidden md:block h-[2px] w-24 bg-gradient-to-r from-[#d4af37] to-[#fcf2bd] mb-8 shadow-sm"></motion.div>
+          <motion.p variants={fadeInUp} className="hidden md:block text-xs lg:text-sm font-sans font-medium leading-relaxed mb-10 max-w-xs tracking-[0.1em] drop-shadow-sm text-[#333333]">
+            Discover exquisite jewelry inspired by the beauty of the heavens. Each piece is crafted to bring elegance to your most cherished occasions.
+          </motion.p>
+          <motion.button onClick={() => navigateTo('category', 'Collection 2026')} variants={fadeInUp} whileHover={{ scale: 1.05, backgroundColor: "#d4af37", color: "#111" }} whileTap={{ scale: 0.95 }} className="hidden md:flex group bg-[#111111] text-white font-bold px-10 py-4 rounded-full text-xs tracking-[0.2em] uppercase items-center gap-4 transition-all duration-300 w-fit shadow-2xl border border-transparent hover:border-[#d4af37]">
             Discover <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-500" />
           </motion.button>
         </motion.div>
 
-        <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-1/3 text-[#111111] flex flex-col items-end justify-end h-full pb-4">
-          <motion.h3 variants={fadeInUp} className="text-sm lg:text-base font-serif font-bold text-right mb-12 max-w-[220px] leading-relaxed tracking-[0.15em] drop-shadow-sm uppercase text-[#111111]">
+        {/* RIGHT COLUMN */}
+        <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="w-1/2 md:w-1/3 text-[#111111] flex flex-col items-end justify-end h-full md:pb-4 pointer-events-auto">
+          <motion.h3 variants={fadeInUp} className="text-[9px] md:text-sm lg:text-base font-serif font-bold text-right mb-4 md:mb-12 max-w-[130px] md:max-w-[220px] leading-relaxed tracking-[0.15em] drop-shadow-sm uppercase text-[#111111]">
             A CELESTIAL TOUCH <br /><span className="italic text-[#d4af37] font-light">FOR TIMELESS MOMENTS</span>
           </motion.h3>
-          <nav className="w-full max-w-[250px] flex flex-col gap-1">
+          <nav className="hidden md:flex w-full max-w-[250px] flex-col gap-1">
             {(categories.length > 0 ? categories.slice(0, 4).map(c => getCatName(c)) : ['Rings', 'Earrings', 'Necklaces', 'Bracelets']).map((item, index) => (
               <motion.div key={index} variants={fadeInUp} onClick={() => navigateTo('category', item)} className="flex justify-between items-center border-b border-gray-300 py-4 cursor-pointer group hover:border-[#111111] transition-colors duration-500">
                 <span className="text-[10px] lg:text-xs tracking-[0.25em] uppercase font-sans font-bold text-gray-600 group-hover:text-[#111111] transition-colors">{item}</span>
@@ -638,8 +642,8 @@ const Hero = ({ navigateTo, categories = [] }) => {
         </motion.div>
       </motion.div>
 
-      <div className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 md:hidden z-30 w-full px-8">
-        <button onClick={() => navigateTo('category', 'Collection 2026')} className="w-full bg-[#111111] text-white px-10 py-[18px] rounded-full text-[13px] font-bold tracking-[0.2em] uppercase shadow-2xl shadow-black/40 border border-[#2d2926] hover:bg-black transition-colors" aria-label="Shop the new collection">Shop Now</button>
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 md:hidden z-30 w-full px-8 pointer-events-auto">
+        <button onClick={() => navigateTo('category', 'Collection 2026')} className="w-full bg-[#111111] text-white px-10 py-[16px] rounded-full text-[12px] font-bold tracking-[0.2em] uppercase shadow-2xl shadow-black/40 border border-[#2d2926] hover:bg-black transition-colors" aria-label="Shop the new collection">Shop Now</button>
       </div>
     </section>
   );
