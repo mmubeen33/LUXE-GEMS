@@ -23,11 +23,25 @@ const AdminNotification = ({ message, type = 'error', onClose }) => {
 const AdminLogin = ({ onLogin, cancel }) => {
   const [pwd, setPwd] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (pwd === '123') onLogin();
-    else {
-      setErrorMsg('Incorrect Secret Password!');
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: pwd })
+      });
+      const data = await res.json();
+      if (data.success) {
+        onLogin();
+      } else {
+        setErrorMsg(data.message || 'Incorrect Secret Password!');
+        setTimeout(() => setErrorMsg(''), 4000);
+      }
+    } catch (err) {
+      setErrorMsg('Server connection failed. Try again.');
       setTimeout(() => setErrorMsg(''), 4000);
     }
   }
@@ -887,7 +901,7 @@ const AdminDashboard = ({ products, setProducts, categories, setCategories, logO
         )}
 
         <div className="p-4 border-t border-gray-200 hidden md:block mt-auto">
-          <button onClick={logOut} className="flex items-center justify-center gap-2 text-sm text-red-600 font-bold hover:opacity-70 w-full"><LogOut size={16} /> Exit to Store</button>
+          <button onClick={logOut} className="flex items-center justify-center gap-2 text-sm text-red-600 font-bold hover:opacity-70 w-full"><LogOut size={16} /> Exit </button>
         </div>
       </div>
 
@@ -1049,6 +1063,36 @@ const AdminDashboard = ({ products, setProducts, categories, setCategories, logO
               <div className="mb-6">
                 <label className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Owner WhatsApp Number (Format: 923XXXXXXXXX)</label>
                 <input type="text" value={settings.whatsapp_number || ''} onChange={(e) => setSettings({ ...settings, whatsapp_number: e.target.value })} className="w-full border-2 border-gray-100 bg-gray-50 rounded-xl p-4 text-sm focus:bg-white focus:border-black outline-none transition-all" />
+              </div>
+
+              <div className="mb-6 mt-8">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-[#2d2926] mb-6 border-b border-gray-100 pb-4">Security</h3>
+                <label className="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest block mb-1">Admin Panel Master Password</label>
+                <p className="text-[10px] text-gray-400 mb-4">Leave this blank if you do not wish to change the current password.</p>
+                <div className="flex gap-4">
+                  <input type="text" placeholder="Enter new password..." value={settings.new_admin_password || ''} onChange={(e) => setSettings({ ...settings, new_admin_password: e.target.value })} className="w-full border-2 border-gray-100 bg-gray-50 rounded-xl p-4 text-sm focus:bg-white focus:border-black outline-none transition-all" />
+                  <button type="button" onClick={async () => {
+                    if (!settings.new_admin_password) return showError("Please enter a new password first.");
+                    try {
+                      setIsSavingSettings(true);
+                      const res = await fetch('/api/settings/password', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ newPassword: settings.new_admin_password })
+                      });
+                      const data = await res.json();
+                      if (!res.ok) throw new Error(data.error || 'Failed to update password');
+                      showSuccess("Password changed successfully!");
+                      setSettings({ ...settings, new_admin_password: '' });
+                    } catch (err) {
+                      showError(err.message);
+                    } finally {
+                      setIsSavingSettings(false);
+                    }
+                  }} className="shrink-0 bg-black text-white px-6 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors">
+                    Update Password
+                  </button>
+                </div>
               </div>
 
               <div className="mb-6 mt-8">

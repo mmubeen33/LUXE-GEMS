@@ -261,10 +261,9 @@ app.post('/api/orders', (req, res) => {
     db.get("SELECT COUNT(*) as count FROM orders", [], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
 
-        // Start counting from 0 (e.g ORD-000) or 1 (e.g ORD-001) depending on row count
+        // Start counting from 00, 01, 02...
         const nextNumber = row.count;
-        const formattedNumber = nextNumber.toString().padStart(3, '0'); // '000', '001', '010'
-        const sequentialId = `ORD-${formattedNumber}`;
+        const sequentialId = nextNumber.toString().padStart(2, '0'); // '00', '01', '02'
 
         const stmt = `
             INSERT INTO orders (id, customerName, customerPhone, customerCity, items, total, status, date)
@@ -448,6 +447,35 @@ app.post('/api/restore', (req, res) => {
             res.json({ success: true, message: 'Database restored successfully!' });
         });
     });
+});
+
+// ------------- ADMIN AUTHENTICATION -------------
+// POST /api/login — Verify master password
+app.post('/api/login', (req, res) => {
+    const { password } = req.body;
+    db.get("SELECT value FROM settings WHERE key = 'admin_password'", (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        const storedPassword = row ? row.value : '123';
+        if (password === storedPassword) {
+            res.json({ success: true, message: 'Login successful' });
+        } else {
+            res.status(401).json({ success: false, message: 'Incorrect Secret Password!' });
+        }
+    });
+});
+
+// PUT /api/settings/password — Change master password
+app.put('/api/settings/password', (req, res) => {
+    const { newPassword } = req.body;
+    if (!newPassword || newPassword.trim() === '') {
+        return res.status(400).json({ error: 'Password cannot be empty.' });
+    }
+    const stmt = db.prepare("INSERT INTO settings (key, value) VALUES ('admin_password', ?) ON CONFLICT(key) DO UPDATE SET value = ?");
+    stmt.run(newPassword, newPassword, function (err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ success: true, message: 'Master password updated successfully!' });
+    });
+    stmt.finalize();
 });
 
 // Serve Admin Panel

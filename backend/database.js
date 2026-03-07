@@ -137,6 +137,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 }
               ])]
             ];
+
+            // Add Master Password for Admin Panel
+            defaultSettings.push(['admin_password', '123']);
+
             const insertStmt = db.prepare("INSERT INTO settings (key, value) VALUES (?, ?)");
             defaultSettings.forEach(setting => insertStmt.run(setting[0], setting[1]));
             insertStmt.finalize();
